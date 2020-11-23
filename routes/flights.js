@@ -7,6 +7,8 @@ const flightsCtrl = require('../controllers/flights');
 router.get('/', flightsCtrl.index)
 // GET /movies/new
 router.get('/new', flightsCtrl.new);
+
+router.get('/:id', flightsCtrl.show);
 // POST /movies
 router.post('/', flightsCtrl.create);
 
