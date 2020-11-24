@@ -7,7 +7,7 @@
     <title>Mongoose Flights</title>
 </head>
 <body>
-    <a href="/">Home</a> | <a href="/flights">View All Flights</a> | <a href="/flights/new">Add a Flight</a>
+    <a href="/">Home</a> | <a href="/flights">View All Flights</a> | <a href="/flights/new">Add a Flight</a> | <a href="/flights/<%= flight._id %>/tickets/new">Add a Ticket</a>
     <section id="show-page">
         <div>Airline: </div>
         <div><%= flight.airline %></div>
@@ -40,6 +40,14 @@
         <input type="submit" value="Add Destination">
       </form>
 
+      <h3>Tickets</h3>
+      <ul>
+      <% tickets.forEach(function(t) { %>
+          <li><label>Seat: <%= t.seat %></label></li>
+          <li><label>Price: <%= t.price %></label></li>
+          <br>
+        <% }); %>
+      </ul>
       <% if (flight.destinations.length) { %>
         <table>
           <thead>

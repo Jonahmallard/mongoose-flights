@@ -1,10 +1,11 @@
 const Flight = require('../models/flight');
+const Ticket = require('../models/ticket');
 
 module.exports = {
     index,
     new: newFlight,
     create,
-    show
+    show,
 };
 
 function index(req, res) {
@@ -13,11 +14,24 @@ function index(req, res) {
     });
 }
 
+// function show(req, res) {
+//     Flight.findById(req.params.id, function(err, flight) {
+//         res.render('flights/show', { title: 'Flight Detail', flight });
+//     });
+// }
+
 function show(req, res) {
-    Flight.findById(req.params.id, function(err, flight) {
-        res.render('flights/show', { title: 'Flight Detail', flight });
-    });
-}
+    Flight.findById(req.params.id).populate('ticket').exec(function(err, flight) {
+        Ticket.find({
+          // Mongoose Query API
+          // .where('_id').nin(flight.ticket)
+          // Native MongoDB syntax
+          flight: flight._id 
+        }, function(err, tickets) {
+          res.render('flights/show', { title: 'Flight Detail', flight, tickets });
+        });
+      });
+  }
 
 function create(req, res) {
     const flight = new Flight(req.body);
